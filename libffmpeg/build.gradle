@@ -1,18 +1,31 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
 }
 
 android {
     compileSdk 29
 
     defaultConfig {
-        applicationId "com.ethan.ffmpegaudiodemo"
         minSdk 21
         targetSdk 29
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+
+        externalNativeBuild {
+            cmake {
+                //cppFlags '-std=c++11'
+                arguments '-DANDROID_TOOLCHAIN=clang', '-DANDROID_ARM_MODE=arm', '-DANDROID_STL=c++_static'
+                cFlags "-ferror-limit=0 -fPIC"
+                cppFlags "-std=c++11 -frtti -fexceptions"
+            }
+        }
+        ndk {
+            abiFilters "arm64-v8a", "armeabi-v7a"
+            //abiFilters "armeabi-v7a"
+        }
     }
 
     buildTypes {
@@ -25,17 +38,20 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    externalNativeBuild {
+        cmake {
+            path file('src/main/cpp/CMakeLists.txt')
+//            version '3.18.1'
+        }
+    }
 }
 
 dependencies {
+
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.2'
-//    implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-//    implementation 'org.videolan.android:libvlc-all:3.1.12'
-//    implementation project(path: ':playerLibrary')
-    implementation project(path: ':libvlc')
-    implementation project(path: ':libffmpeg')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'

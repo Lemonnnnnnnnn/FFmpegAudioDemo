@@ -1,4 +1,4 @@
-package com.ethan.ffmpegaudiodemo;
+package com.ethan.mediaplaydemo;
 
 import android.annotation.SuppressLint;
 import android.content.ContentUris;

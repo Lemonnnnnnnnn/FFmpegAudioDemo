@@ -1,4 +1,4 @@
-package com.ethan.ffmpegaudiodemo;
+package com.ethan.libffmpeg;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.ethan.ffmpegaudiodemo", appContext.getPackageName());
+        assertEquals("com.ethan.libffmpeg.test", appContext.getPackageName());
     }
 }

@@ -2,7 +2,7 @@
 #define LEARNFFMPEG_MEDIAPLAYER_H
 
 #include <jni.h>
-#include <decoder/AudioDecoder.h>
+#include "decoder/AudioDecoder.h"
 
 #define JAVA_PLAYER_EVENT_CALLBACK_API_NAME "playerEventCallback"
 

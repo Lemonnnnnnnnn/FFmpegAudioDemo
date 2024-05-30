@@ -1,9 +1,8 @@
-package com.ethan.ffmpegaudiodemo;
+package com.ethan.libffmpeg;
 
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
-import android.view.Surface;
 
 public class FFMediaPlayer {
 

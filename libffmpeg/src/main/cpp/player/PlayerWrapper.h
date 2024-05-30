@@ -2,7 +2,7 @@
 #define LEARNFFMPEG_PLAYERWRAPPER_H
 
 #include <jni.h>
-#include <FFMediaPlayer.h>
+#include "FFMediaPlayer.h"
 
 static const int FFMEDIA_PLAYER = 0;
 static const int HWCODEC_PLAYER = 1;

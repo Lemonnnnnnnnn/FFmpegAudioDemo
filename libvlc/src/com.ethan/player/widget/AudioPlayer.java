@@ -116,17 +116,17 @@ public class AudioPlayer extends LinearLayout implements View.OnClickListener, S
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
         Log.d("onStartTrackingTouch", "SeekBar");
-        isTouch = true;
+//        isTouch = true;
     }
 
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
         Log.d("onStopTrackingTouch", "SeekBar");
-        if (!isTouch){
+//        if (!isTouch){
+//            isTouch = false;
             if (mChangeListener != null){
                 mChangeListener.onProgressChanged(seekBar,seekBar.getProgress(),true);
             }
-            isTouch = false;
-        }
+//        }
     }
 }

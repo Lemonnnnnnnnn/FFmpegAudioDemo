@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
@@ -169,6 +170,7 @@ public class AudioPlayerActivity extends AppCompatActivity implements VlcListene
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         if (fromUser && mAudioPlayerControl.isSeekAble()) {
+            Log.d("AudioPlayerActivity", "onProgressChanged: " + progress);
             mAudioPlayerControl.seekTo(progress);
             setOverlayProgress();
         }

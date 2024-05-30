@@ -19,12 +19,12 @@ extern "C" {
 extern "C" {
 #endif
 /*
- * Class:     com_ethan_ffmpegaudiodemo_FFMediaPlayer
+ * Class:     com_ethan_libffmpeg_FFMediaPlayer
  * Method:    native_GetFFmpegVersion
  * Signature: ()Ljava/lang/String;
  */
 JNIEXPORT jstring JNICALL
-Java_com_ethan_ffmpegaudiodemo_FFMediaPlayer_native_1GetFFmpegVersion(JNIEnv *env, jclass cls)
+Java_com_ethan_libffmpeg_FFMediaPlayer_native_1GetFFmpegVersion(JNIEnv *env, jclass cls)
 {
     char strBuffer[1024 * 4] = {0};
     strcat(strBuffer, "libavcodec : ");
@@ -51,12 +51,12 @@ Java_com_ethan_ffmpegaudiodemo_FFMediaPlayer_native_1GetFFmpegVersion(JNIEnv *en
 }
 
 /*
- * Class:     com_ethan_ffmpegaudiodemo_FFMediaPlayer
+ * Class:     com_ethan_libffmpeg_FFMediaPlayer
  * Method:    native_Init
  * Signature: (JLjava/lang/String;Ljava/lang/Object;)J
  */
 JNIEXPORT jlong JNICALL
-Java_com_ethan_ffmpegaudiodemo_FFMediaPlayer_native_1Init(JNIEnv *env, jobject obj, jstring jurl)
+Java_com_ethan_libffmpeg_FFMediaPlayer_native_1Init(JNIEnv *env, jobject obj, jstring jurl)
 {
     const char* url = env->GetStringUTFChars(jurl, nullptr);
     PlayerWrapper *player = new PlayerWrapper();
@@ -66,12 +66,12 @@ Java_com_ethan_ffmpegaudiodemo_FFMediaPlayer_native_1Init(JNIEnv *env, jobject o
 }
 
 /*
- * Class:     com_ethan_ffmpegaudiodemo_FFMediaPlayer
+ * Class:     com_ethan_libffmpeg_FFMediaPlayer
  * Method:    native_Play
  * Signature: (J)V
  */
 JNIEXPORT void JNICALL
-Java_com_ethan_ffmpegaudiodemo_FFMediaPlayer_native_1Play(JNIEnv *env, jobject obj, jlong player_handle)
+Java_com_ethan_libffmpeg_FFMediaPlayer_native_1Play(JNIEnv *env, jobject obj, jlong player_handle)
 {
     if(player_handle != 0)
     {
@@ -82,7 +82,7 @@ Java_com_ethan_ffmpegaudiodemo_FFMediaPlayer_native_1Play(JNIEnv *env, jobject o
 }
 
 JNIEXPORT void JNICALL
-Java_com_ethan_ffmpegaudiodemo_FFMediaPlayer_native_1SeekToPosition(JNIEnv *env, jobject thiz,
+Java_com_ethan_libffmpeg_FFMediaPlayer_native_1SeekToPosition(JNIEnv *env, jobject thiz,
                                                                       jlong player_handle, jfloat position) {
     if(player_handle != 0)
     {
@@ -92,12 +92,12 @@ Java_com_ethan_ffmpegaudiodemo_FFMediaPlayer_native_1SeekToPosition(JNIEnv *env,
 }
 
 /*
- * Class:     com_ethan_ffmpegaudiodemo_FFMediaPlayer
+ * Class:     com_ethan_libffmpeg_FFMediaPlayer
  * Method:    native_Pause
  * Signature: (J)V
  */
 JNIEXPORT void JNICALL
-Java_com_ethan_ffmpegaudiodemo_FFMediaPlayer_native_1Pause
+Java_com_ethan_libffmpeg_FFMediaPlayer_native_1Pause
 (JNIEnv *env, jobject obj, jlong player_handle)
 {
     if(player_handle != 0)
@@ -108,12 +108,12 @@ Java_com_ethan_ffmpegaudiodemo_FFMediaPlayer_native_1Pause
 }
 
 /*
- * Class:     com_ethan_ffmpegaudiodemo_FFMediaPlayer
+ * Class:     com_ethan_libffmpeg_FFMediaPlayer
  * Method:    native_Stop
  * Signature: (J)V
  */
 JNIEXPORT void JNICALL
-Java_com_ethan_ffmpegaudiodemo_FFMediaPlayer_native_1Stop
+Java_com_ethan_libffmpeg_FFMediaPlayer_native_1Stop
 (JNIEnv *env, jobject obj, jlong player_handle)
 {
     if(player_handle != 0)
@@ -124,12 +124,12 @@ Java_com_ethan_ffmpegaudiodemo_FFMediaPlayer_native_1Stop
 }
 
 /*
- * Class:     com_ethan_ffmpegaudiodemo_FFMediaPlayer
+ * Class:     com_ethan_libffmpeg_FFMediaPlayer
  * Method:    native_UnInit
  * Signature: (J)V
  */
 JNIEXPORT void JNICALL
-Java_com_ethan_ffmpegaudiodemo_FFMediaPlayer_native_1UnInit(JNIEnv *env, jobject obj, jlong player_handle)
+Java_com_ethan_libffmpeg_FFMediaPlayer_native_1UnInit(JNIEnv *env, jobject obj, jlong player_handle)
 {
     if(player_handle != 0)
     {
@@ -141,7 +141,7 @@ Java_com_ethan_ffmpegaudiodemo_FFMediaPlayer_native_1UnInit(JNIEnv *env, jobject
 
 
 JNIEXPORT jfloat JNICALL
-Java_com_ethan_ffmpegaudiodemo_FFMediaPlayer_native_1getDuration(JNIEnv *env, jobject thiz,jlong player_handle) {
+Java_com_ethan_libffmpeg_FFMediaPlayer_native_1getDuration(JNIEnv *env, jobject thiz,jlong player_handle) {
     if(player_handle != 0)
     {
         PlayerWrapper *ffMediaPlayer = reinterpret_cast<PlayerWrapper *>(player_handle);
