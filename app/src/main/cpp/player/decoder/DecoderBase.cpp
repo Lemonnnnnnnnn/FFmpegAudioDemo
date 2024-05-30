@@ -1,7 +1,6 @@
 #include "DecoderBase.h"
 #include "LogUtil.h"
-#include "../../util/LogUtil.h"
-
+#include "errno.h"
 void DecoderBase::Start() {
     if(m_Thread == nullptr) {
         StartDecodingThread();
@@ -65,7 +64,7 @@ int DecoderBase::InitFFDecoder() {
         //2.打开文件
         if(avformat_open_input(&m_AVFormatContext, m_Url, NULL, NULL) != 0)
         {
-            LOGCATE("DecoderBase::InitFFDecoder avformat_open_input fail.");
+            LOGCATE("DecoderBase::InitFFDecoder avformat_open_input fail. %s",strerror(errno));
             break;
         }
 

@@ -12,5 +12,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
 rootProject.name = "FFmpegAudioDemo"
-include ':app'
+include ':app'/*,'playerLibrary'*/,'libvlc'

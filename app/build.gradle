@@ -46,10 +46,13 @@ android {
 }
 
 dependencies {
-
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.0.2'
 //    implementation 'com.google.android.material:material:1.12.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+//    implementation 'org.videolan.android:libvlc-all:3.1.12'
+//    implementation project(path: ':playerLibrary')
+    implementation project(path: ':libvlc')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'

@@ -33,48 +33,6 @@ add_library( # Sets the name of the library.
              ${src-files}
         )
 
-#add_library(avutil
-#        SHARED
-#        IMPORTED)
-#set_target_properties(avutil
-#        PROPERTIES IMPORTED_LOCATION
-#        ${jnilibs}/${ANDROID_ABI}/libavutil.so)
-#
-#add_library(swresample
-#        SHARED
-#        IMPORTED)
-#set_target_properties(swresample
-#        PROPERTIES IMPORTED_LOCATION
-#        ${jnilibs}/${ANDROID_ABI}/libswresample.so)
-#
-#add_library(avcodec
-#        SHARED
-#        IMPORTED)
-#set_target_properties(avcodec
-#        PROPERTIES IMPORTED_LOCATION
-#        ${jnilibs}/${ANDROID_ABI}/libavcodec.so)
-#
-#add_library(avfilter
-#        SHARED
-#        IMPORTED)
-#set_target_properties(avfilter
-#        PROPERTIES IMPORTED_LOCATION
-#        ${jnilibs}/${ANDROID_ABI}/libavfilter.so)
-#
-#add_library(swscale
-#        SHARED
-#        IMPORTED)
-#set_target_properties(swscale
-#        PROPERTIES IMPORTED_LOCATION
-#        ${jnilibs}/${ANDROID_ABI}/libswscale.so)
-#
-#add_library(avformat
-#        SHARED
-#        IMPORTED)
-#set_target_properties(avformat
-#        PROPERTIES IMPORTED_LOCATION
-#        ${jnilibs}/${ANDROID_ABI}/libavformat.so)
-
 #ASAN 需要 NDK20 编译，Android P 以上运行
 #target_compile_options(${libname} PUBLIC -fsanitize=address -fno-omit-frame-pointer)
 #set_target_properties(${libname} PROPERTIES LINK_FLAGS -fsanitize=address)

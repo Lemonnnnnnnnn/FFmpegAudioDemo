@@ -13,7 +13,6 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,10 +23,19 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.ethan.player.activity.AudioPlayerActivity;
+
+import org.videolan.libvlc.LibVLC;
+import org.videolan.libvlc.Media;
+import org.videolan.libvlc.MediaPlayer;
+
+import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Formatter;
 
 
-public class MainActivity extends AppCompatActivity implements FFMediaPlayer.EventCallback {
+public class MainActivity extends AppCompatActivity implements FFMediaPlayer.EventCallback,MediaPlayer.EventListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private TextView tvDuration,tvProgress;
@@ -41,6 +49,8 @@ public class MainActivity extends AppCompatActivity implements FFMediaPlayer.Eve
     private final int REQUEST_FILE_CODE = 0x11;
     private boolean mIsTouch = false;
     private String mVideoPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/test.wma";
+    private MediaPlayer mMediaPlayer;
+    private LibVLC mLibVLC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements FFMediaPlayer.Eve
         seekBar = findViewById(R.id.seek_bar);
         tvDuration=findViewById(R.id.tv_duration);
         tvProgress = findViewById(R.id.tv_process);
+        mLibVLC = new LibVLC(this,null);
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -67,6 +78,10 @@ public class MainActivity extends AppCompatActivity implements FFMediaPlayer.Eve
                 Log.d(TAG, "onStopTrackingTouch() called with: progress = [" + seekBar.getProgress() + "]");
                 if(ffMediaPlayer != null) {
                     ffMediaPlayer.seekToPosition(seekBar.getProgress());
+                    mIsTouch = false;
+                }
+                if (mIsTouch && mMediaPlayer != null && mMediaPlayer.isPlaying()){
+                    mMediaPlayer.setTime(seekBar.getProgress());
                     mIsTouch = false;
                 }
             }
@@ -106,9 +121,7 @@ public class MainActivity extends AppCompatActivity implements FFMediaPlayer.Eve
                         onDecoderReady();
                         break;
                     case MSG_DECODER_DONE:
-//                        if (ffMediaPlayer != null){
-//                            ffMediaPlayer.stop();
-//                        }
+                        Log.d(TAG, "onPlayerEvent() called with: MSG_DECODER_DONE");
                         break;
                     case MSG_DECODING_TIME:
                         if(!mIsTouch)
@@ -129,8 +142,14 @@ public class MainActivity extends AppCompatActivity implements FFMediaPlayer.Eve
             ffMediaPlayer.unInit();
             ffMediaPlayer = null;
         }
+        if (mMediaPlayer != null){
+            mMediaPlayer.stop();
+            mMediaPlayer.release();
+            mLibVLC.release();
+            mMediaPlayer = null;
+            mLibVLC = null;
+        }
         String[] mimeTypes = {"*/*"};
-        // String[] mimeTypes = {"application/octet-stream"}; // 指定bin类型
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
         StringBuilder mimeTypesStr = new StringBuilder();
@@ -147,7 +166,15 @@ public class MainActivity extends AppCompatActivity implements FFMediaPlayer.Eve
             Uri uri = data.getData();
             mVideoPath = PickUtils.getPath(MainActivity.this, uri);
             Log.d(TAG, "onActivityResult: path is " + mVideoPath);
-            startPlay();
+//            startPlay();
+            AudioPlayerActivity.gotoAudioPlayerActivity(MainActivity.this, mVideoPath);
+//            mMediaPlayer = new MediaPlayer(mLibVLC);
+//            final Media media = new Media(mLibVLC, mVideoPath);
+//            mMediaPlayer.setEventListener(this);
+//            mMediaPlayer.setMedia(media);
+//            media.release();
+//            mMediaPlayer.play();
+
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -165,5 +192,44 @@ public class MainActivity extends AppCompatActivity implements FFMediaPlayer.Eve
             }
         }
         return true;
+    }
+
+    @Override
+    public void onEvent(MediaPlayer.Event event) {
+        switch (event.type){
+            case MediaPlayer.Event.Playing:
+                Log.d(TAG, "onEvent() called with: event = Playing");
+                seekBar.setMax((int) mMediaPlayer.getLength());
+                tvDuration.setText(stringForTime((int) mMediaPlayer.getLength()));
+                break;
+            case MediaPlayer.Event.EndReached:
+                Log.d(TAG, "onEvent() called with: event = EndReached");
+                break;
+            case MediaPlayer.Event.TimeChanged:
+                if (!mIsTouch){
+                    seekBar.setProgress((int) mMediaPlayer.getTime());
+                }
+                tvProgress.setText(stringForTime((int) mMediaPlayer.getTime()));
+                Log.d(TAG, "onEvent() called with: event = TimeChanged");
+                break;
+            case MediaPlayer.Event.PositionChanged:
+                Log.d(TAG, "onEvent() called with: event = PositionChanged");
+                break;
+            default:
+                break;
+        }
+    }
+
+    private String stringForTime(int timeMs) {
+        int totalSeconds = timeMs / 1000;
+        int seconds = totalSeconds % 60;
+        int minutes = (totalSeconds / 60) % 60;
+        int hours = totalSeconds / 3600;
+
+        if (hours > 0) {
+            return String.format("%d:%02d:%02d", hours, minutes, seconds);
+        } else {
+            return String.format("%02d:%02d", minutes, seconds);
+        }
     }
 }
