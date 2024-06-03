@@ -13,6 +13,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "FFmpegAudioDemo"
+rootProject.name = "MediaPlayDemo"
 include ':app'/*,'playerLibrary'*/,'libvlc'
 include ':libffmpeg'
