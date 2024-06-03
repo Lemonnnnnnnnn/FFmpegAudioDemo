@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void choose(View view) {
+    public void chooseVideo(View view) {
         // 指定类型
         String[] mimeTypes = {"*/*"};
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             Uri uri = data.getData();
             String mVideoPath = PickUtils.getPath(MainActivity.this, uri);
             Log.d(TAG, "onActivityResult: path is " + mVideoPath);
-            AudioPlayerActivity.gotoAudioPlayerActivity(MainActivity.this, mVideoPath);
+            CustomPlayerActivity.gotoAudioPlayerActivity(MainActivity.this, mVideoPath);
 
         }
         super.onActivityResult(requestCode, resultCode, data);

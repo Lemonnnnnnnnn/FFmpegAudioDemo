@@ -64,6 +64,7 @@ public class AudioPlayerControl implements IMediaControl, MediaPlayer.EventListe
         } else {
             media = new Media(mLibVLC, Uri.parse(mPath));
         }
+        media.setHWDecoderEnabled(true,true);
         mMediaPlayer.setMedia(media);
         mMediaPlayer.setEventListener(this);
     }
